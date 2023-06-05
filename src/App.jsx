@@ -1,33 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { useState , useEffect } from 'react'
+import "bootstrap/dist/css/bootstrap.min.css";
+import Formulario from './components/Formulario';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [latitud ,setLatitud]=useState([]);
+  const [clima ,setClima]=useState([]);
+  const [datosCiudad, setDatosCiudad] = useState([]);
+  useEffect(() => {
+      consultarApi;
+    }, []);
+
+    const key="225eb8bfc952ed0173c0eafb2a8f19a9";
+  const consultarApi = async (ciudad) => {
+      try {
+        const respuesta= await fetch( `http://api.openweathermap.org/geo/1.0/direct?q=${ciudad}&limit=5&lang=sp&appid=${key}`) 
+        const dato = await respuesta.json();
+        setDatosCiudad(dato);
+        
+      } catch (error) {
+          console.log(error);
+      }
+  }
+  const consultarTemp = async (lat , long) => {
+      try {
+        const respuestaLatLong = await fetch( `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${key}&units=metric`) 
+        const dato = await respuestaLatLong.json();
+        setClima(dato);
+        
+      } catch (error) {
+          console.log(error);
+      }
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <Formulario datos={datosCiudad} consulta={consultarApi} temperatura={consultarTemp} clima={clima}></Formulario>
     </>
   )
 }
