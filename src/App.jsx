@@ -10,6 +10,7 @@ function App() {
   const [datosCiudad, setDatosCiudad] = useState([]);
   useEffect(() => {
       consultarApi;
+      consultarTemp;
     }, []);
 
     const key="225eb8bfc952ed0173c0eafb2a8f19a9";
