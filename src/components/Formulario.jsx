@@ -33,16 +33,16 @@ const Formulario = ({ datos, consulta ,temperatura ,clima }) => {
       console.log(clima.main)
   //icon=arrayClima.map((item)=> {return JSON.stringify(item.weather[0].icon)})
   icon=JSON.stringify(clima.weather)
-  temperaturaClima=JSON.stringify(clima.main)
-  temperaturaMax=JSON.stringify(clima.main)
-  temperaturaMin=JSON.stringify(clima.main)
+  temperaturaClima=(clima.main.temp)
+  temperaturaMax=(clima.main.temp_max)
+  temperaturaMin=(clima.main.temp_min)
   const imagen=`https://openweathermap.org/img/wn/${icon}@2x.png`
   console.log(`temperatura: ${temperaturaClima}`)
     console.log(`max temperatura: ${temperaturaMax}`)
     console.log(`min temperatura: ${temperaturaMin}`)
     console.log(`icon: ${icon}`)
   }
-  
+
   return (
     <div>
   
