@@ -1,22 +1,29 @@
 import React from 'react';
 
-const Item = ({clima,ciudad}) => {
-    const imagen=`https://openweathermap.org/img/wn/${img}@2x.png`
-    icon=arrayClima.map((item)=> {return JSON.stringify(item.weather[0].icon)})
-  temperaturaClima=JSON.stringify(clima.main.temp)
-  temperaturaMax=JSON.stringify(clima.main.temp_max)
-  temperaturaMin=JSON.stringify(clima.main.temp_min)
+const Item = ({temp_min,temp_max,temp,ciudad,icon}) => {
+    let imagen=""
+    if(icon){
+        imagen=`https://openweathermap.org/img/wn/${icon}@2x.png`
+    }
+    else{
+        imagen="https://openweathermap.org/img/wn/10d@2x.png"
+    }
+   
+    let cadena = imagen;
+    cadena=cadena.replace(/["]+/g, '');
+    
+    if(!cadena){
+        cadena="https://openweathermap.org/img/wn/10d@2x.png"
+    }
     return (
-        <div className="d-flex justify-content-center">
-           <div>
-            
-            <p>Agrege cuidad y pais</p>
-            <h5>Clima en {ciudad}</h5>
-            <img src="img" alt=""/>
-            <img src={imagen} alt="icon"/>
-            <h2>:{temperatura}</h2>
-            <p>Max: {temperaturaMax}C</p>
-            <p>Min: {temperaturaMin}°C</p> 
+        <div className="d-flex justify-content-center  container  mt-5">
+           <div className='w-50  text-center border border-black bg-info '>
+
+            <h5>Clima en {ciudad?ciudad:"Alderetes"}</h5>
+            <img src={cadena?cadena:"https://openweathermap.org/img/wn/10d@2x.png"} alt="icon"/>
+            <h2>Temperatura:{temp?temp:25}°C</h2>
+            <p>Max: {temp_max?temp_max:30}°C</p>
+            <p>Min: {temp_min?temp_min:20}°C</p> 
         </div> 
         </div>
     );
