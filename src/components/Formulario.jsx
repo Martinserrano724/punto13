@@ -6,13 +6,18 @@ import Item from "./Item";
 const Formulario = ({ datos, consulta ,temperatura ,clima }) => {
   const [selectPais, setSelectPais] = useState("");
   const [ciudad, setCiudad] = useState("");
+  const [temperaturaMin, setTemperaturaMin] = useState("");
+  const [temperaturaMax, setTemperaturaMax] = useState("");
+  const [temperaturaClima, setTemperaturaClima] = useState("");
+  const [icon, setIcon] = useState("");
+
     const arrayClima=[clima];
   let longitud=0;
   let latitud=0;
-  let icon='';
-  let temperaturaClima ;
-  let temperaturaMax='';
-  let temperaturaMin='';
+  
+
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,25 +27,17 @@ const Formulario = ({ datos, consulta ,temperatura ,clima }) => {
  function cargaDatos(){
     const resultado = datos.filter((dat) => {
         if (dat.country == selectPais) {
-          console.log(dat);
           longitud=dat.lon
           latitud=dat.lat
           return dat;
         }
       });
       temperatura(latitud,longitud)
-      console.log(`resultado ${JSON.stringify(resultado)}`);
       console.log(clima.main)
-  //icon=arrayClima.map((item)=> {return JSON.stringify(item.weather[0].icon)})
-  icon=JSON.stringify(clima.weather)
-  temperaturaClima=(clima.main.temp)
-  temperaturaMax=(clima.main.temp_max)
-  temperaturaMin=(clima.main.temp_min)
-  const imagen=`https://openweathermap.org/img/wn/${icon}@2x.png`
-  console.log(`temperatura: ${temperaturaClima}`)
-    console.log(`max temperatura: ${temperaturaMax}`)
-    console.log(`min temperatura: ${temperaturaMin}`)
-    console.log(`icon: ${icon}`)
+      setIcon(arrayClima.map((item)=> {return JSON.stringify(item.weather[0].icon)}))
+ setTemperaturaClima(clima.main.temp)
+  setTemperaturaMax(clima.main.temp_max)
+  setTemperaturaMin(clima.main.temp_min)
   }
 
   return (
@@ -144,7 +141,7 @@ const Formulario = ({ datos, consulta ,temperatura ,clima }) => {
         </Button>
       </Row>
     </Form>
-   
+           <Item temp_min={temperaturaMin} temp_max={temperaturaMax} temp={temperaturaClima} ciudad={ciudad} icon={icon}></Item>
     </div>
   );
 };
